@@ -15,7 +15,7 @@ def minOperations(n):
 
     Returns: int: minimum number of operations
     """
-    if n > 1:
+    if type(n) is int and n > 1:
         for i in range(2, n + 1):
             if n % i == 0:
                 return minOperations(n // i) + i
