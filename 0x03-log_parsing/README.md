@@ -1,8 +1,9 @@
 <h2>Write a script that reads stdin line by line and computes metrics:</h2>
 
 <strong>Input format:</strong><br/>
-<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size><br/>
+[IP Address] - [date] "GET /projects/260 HTTP/1.1" [status code] [file size]<br/>
 (if the format is not this one, the line must be skipped)<br/><br/>
+
 After every 10 lines and/or a keyboard interruption (CTRL + C), print these statistics from the beginning:
 - <strong>Total file size:</strong> File size: <total size><br/>
 - where <total size> is the sum of all previous <file size> (see input format above)<br/>
