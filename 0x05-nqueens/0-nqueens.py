@@ -14,7 +14,7 @@ def check_position(chessboard, row, col):
     return True
 
 
-def check_board(board, col, n):
+def print_chessboard(board, col, n):
     """
     function that print the board
     """
@@ -25,7 +25,7 @@ def check_board(board, col, n):
     for row in range(n):
         if check_position(board, row, col):
             board[col] = row
-            check_board(board, col + 1, n)
+            print_chessboard(board, col + 1, n)
 
 
 if __name__ == "__main__":
@@ -52,4 +52,4 @@ if __name__ == "__main__":
 
     chessboard = [0 for row in range(N)]
 
-    check_board(chessboard, 0, N)
+    print_chessboard(chessboard, 0, N)
