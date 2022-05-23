@@ -1,58 +1,66 @@
 #!/usr/bin/python3
+"""
+The N queens puzzle is the challenge of placing N non-attacking queens
+on an NxN chessboard.
+"""
+import sys
 
 
-from curses.ascii import isdigit
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    exit(1)
+
+N = sys.argv[1]
+
+if not str.isdigit(N):
+    print("N must be a number")
+    exit(1)
+
+N = int(N)
+
+if N < 4:
+    print("N must be at least 4")
+    exit(1)
+
+positions = [-1] * N
 
 
-def is_safe(board, row, column):
+def set_queen_position(N, col, positions):
     """
-    Function that check if the Queens dosn't atack each other
-        board: Array of lenght n with the position of all the queens
-        row: row position of the queen
-        column: column position of the queen
+    Set the position of the queen in the array
     """
-
-    for queen in range(column):
-        if board[queen] == row or\
-                abs(board[queen] - row) == abs(queen - column):
-            return False
-
-    return True
-
-
-def check_board(board, column, n):
-    """
-    function that select and print the board:
-        board: Array of lenght n with the position of all the queens
-        column: column of othe position
-        n = the number of queens and positions
-    """
-    if column == n:
-        print(str([[c, board[c]] for c in range(n)]))
-        return
-
-    for row in range(n):
-        if is_safe(board, row, column):
-            board[column] = row
-            check_board(board, column + 1, n)
+    for row in range(N):
+        if row in positions:
+            continue
+        if check_diagonals(row, col, positions):
+            continue
+        positions[col] = row
+        if col == N-1:
+            print_posible_positions(N, positions)
+            positions[col] = -1
+            continue
+        set_queen_position(N, col+1, positions)
+        if -1 in positions:
+            positions[col] = -1
 
 
-if __name__ == "__main__":
-    import sys
+def print_posible_positions(N, positions):
+    """print the positions of the queens"""
+    arr = []
+    for i in range(N):
+        arr.append([i, positions[i]])
+    print(arr)
 
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
 
-    N = int(sys.argv[1])
+def check_diagonals(row, col, positions):
+    """check if the queen is in the diagonal"""
+    for col in range(col, -1, -1):
+        if abs(positions[col] - row) == abs(col - col):
+            return True
+    return False
 
-    if type(N) != int:
-        print("N must be a number")
-        sys.exit(1)
 
-    if N < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    board = [0 for row in range(N)]
-
-    check_board(board, 0, N)
+for row in range(N):
+    positions[0] = row
+    set_queen_position(N, 1, positions)
+    positions = [-1] * N
