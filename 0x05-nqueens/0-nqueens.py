@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
 
+from curses.ascii import isdigit
+
+
 def is_safe(board, row, column):
     """
     Function that check if the Queens dosn't atack each other
@@ -37,25 +40,19 @@ def check_board(board, column, n):
 if __name__ == "__main__":
     import sys
 
-    try:
-        n = int(sys.argv[1])
-
-    except:
-        if len(sys.argv) != 2:
-            print("Usage: nqueens N")
-
-        else:
-            print("N must be a number")
-        sys.exit(1)
-
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
+
+    N = int(sys.argv[1])
+
+    if type(N) != int:
+        print("N must be a number")
         sys.exit(1)
 
-    if n < 4:
+    if N < 4:
         print("N must be at least 4")
         sys.exit(1)
 
-    board = [0 for row in range(n)]
+    board = [0 for row in range(N)]
 
-    check_board(board, 0, n)
+    check_board(board, 0, N)
